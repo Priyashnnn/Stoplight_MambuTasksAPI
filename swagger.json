@@ -3,7 +3,7 @@
   "info": {
     "version": "v3",
     "title": "Tasks",
-    "description": "The Mambu Tasks API allows you to create tasks that you can assign to users or link it to a group of users to keep track of your daily management activities. A task can be an action performed by a user or group of users such as 'Follow up on payment','Evaluate client business'. You can assign tasks with a due date, add notes describing the task and mark closed when complete."
+    "description": "The Mambu Tasks API allows you to create tasks that you can assign to users or link it to a group of users to keep track of your daily management activities. A task can be an action performed by a user or group of users such as following up on a repayment or other to-do items. You can assign tasks with a due date, add notes describing the task and mark closed when complete."
   },
   "host": "localhost:8889",
   "basePath": "/api",
@@ -23,7 +23,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Allows retrieval of a single task via id or encoded key",
+        "summary": "Returns detailed information about a specific task based on its ID or encoded key.",
         "description": "",
         "operationId": "getById",
         "consumes": [
@@ -83,7 +83,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Update an existing task",
+        "summary": "Updates attribute values for a specific task. You can update multiple attributes of the same task in the same request.",
         "description": "",
         "operationId": "update",
         "consumes": [
@@ -152,8 +152,8 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Delete an existing task",
-        "description": "",
+        "summary": "Deletes specific task from the collection based on their IDs.",
+        "description": "The id or encoded key of the task",
         "operationId": "delete",
         "consumes": [
           "application/json"
@@ -168,6 +168,10 @@
             "description": "The id or encoded key of the task",
             "required": true,
             "type": "string"
+          },
+          {
+            "type": "string",
+            "in": "header"
           }
         ],
         "responses": {
