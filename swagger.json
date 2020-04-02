@@ -3,7 +3,7 @@
   "info": {
     "version": "v3",
     "title": "Tasks",
-    "description": "The Mambu Tasks API lets you retrieve, create, update or delete tasks. A task represents an action that can be assigned to a user or group of users. You can assign, followup and close tasks tracking daily activities across teams. "
+    "description": "The Mambu Tasks API allows you to create tasks that you can assign to users or link it to a group of users to keep track of your daily management activities. A task can be an action performed by a user or group of users such as 'Follow up on payment','Evaluate client business'. You can assign tasks with a due date, add notes describing the task and mark closed when complete."
   },
   "host": "localhost:8889",
   "basePath": "/api",
@@ -442,6 +442,21 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/Task"
+            },
+            "x-examples": {
+              "example-1": {}
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Task to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Task"
+            },
+            "x-examples": {
+              "example-1": {}
             }
           }
         ],
