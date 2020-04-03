@@ -29,7 +29,7 @@
           "Tasks"
         ],
         "summary": "Retrieves a task",
-        "description": "Returns detailed information about a specific task based on its ID or encoded key. ",
+        "description": "To retrieve a task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint e.g. https://localhost:8889/api/tasks/{taskId} to fetch the task value associated with the task. \n\nPass the “clientId” or “groupId” in the JSON body to specify the user.\nYou can also provide the additional parameters, “FromDate” and “ToDate” to find tasks between a specific time frame.\nUse “StatusCode” = “0” to find incomplete tasks and “1” to find completed tasks.",
         "operationId": "getById",
         "consumes": [
           "application/json"
@@ -76,10 +76,6 @@
           {
             "type": "string",
             "in": "header"
-          },
-          {
-            "type": "string",
-            "in": "query"
           }
         ],
         "responses": {
@@ -794,6 +790,10 @@
           {
             "in": "formData",
             "type": "string"
+          },
+          {
+            "type": "string",
+            "in": "header"
           }
         ],
         "responses": {
@@ -882,9 +882,7 @@
   },
   "securityDefinitions": {
     "API Key - 1": {
-      "name": "API Key",
-      "type": "apiKey",
-      "in": "query"
+      "type": "basic"
     }
   },
   "definitions": {
@@ -2094,11 +2092,8 @@
       }
     }
   },
-  "produces": [
-    "application/json"
-  ],
+  "produces": [],
   "consumes": [
-    "application/xml",
-    "application/javascript"
+    "application/json"
   ]
 }
