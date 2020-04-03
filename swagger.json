@@ -24,7 +24,7 @@
           "Tasks"
         ],
         "summary": "Returns detailed information about a specific task based on its ID or encoded key.",
-        "description": "Returns detailed information about a specific task based on its ID or encoded key.",
+        "description": "",
         "operationId": "getById",
         "consumes": [
           "application/json"
@@ -766,7 +766,7 @@
           "Tasks"
         ],
         "summary": "Create a new task. The status will be set as OPEN.",
-        "description": "",
+        "description": "Create/Update a task with a title and description and assign it to a user, associate with an object, and give it an optional due date for completion. If the encoded key is provided, an update will be executed.",
         "operationId": "create",
         "consumes": [
           "application/json"
@@ -791,43 +791,16 @@
               "$ref": "#/definitions/Task"
             },
             "x-examples": {
-              "example-1": {
-                "dueDate": "1987-04-26",
-                "description": "string",
-                "title": "string",
-                "taskLinkKey": "string",
-                "id": 0,
-                "assignedUserKey": "string",
-                "taskLinkType": "CLIENT",
-                "status": "OPEN"
-              },
-              "example-2": {}
-            }
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Task to be created",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Task"
-            },
-            "x-examples": {
-              "example-1": {},
-              "example-2": {}
-            }
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Task to be created",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Task"
-            },
-            "x-examples": {
               "example-1": {}
             }
+          },
+          {
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "type": "string"
           }
         ],
         "responses": {
@@ -836,7 +809,7 @@
             "examples": {}
           },
           "201": {
-            "description": "Task created",
+            "description": "Returns the newly created task.",
             "schema": {
               "$ref": "#/definitions/Task"
             },
@@ -859,7 +832,7 @@
             }
           },
           "400": {
-            "description": "A Validation error occurred",
+            "description": "Returned if the request parameters or body is not valid.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -2118,6 +2091,9 @@
     },
     "ErrorResponse": {
       "type": "object",
+      "x-examples": {
+        "example-1": {}
+      },
       "properties": {
         "errors": {
           "type": "array",
@@ -2125,9 +2101,6 @@
             "$ref": "#/definitions/RestError"
           }
         }
-      },
-      "x-examples": {
-        "example-1": {}
       }
     }
   }
