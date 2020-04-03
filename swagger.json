@@ -5,8 +5,11 @@
     "title": "Tasks",
     "description": "The Mambu Tasks API allows you to create tasks that you can assign to users or link it to a group of users to keep track of your daily management activities. A task can be an action performed by a user or group of users such as following up on a repayment or other to-do items. You can assign tasks with a due date, add notes describing the task and mark closed when complete.\n\nThe Tasks API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. We have language bindings in cURL, HTTP, JavaScript, Node.js, Ruby, Python, Java, and Go! You can view the code samples and programming examples throughout the document. \n\nYou can use the Tasks API in test mode, which does not affect your live data or interact with your networks. The ID or encoded key you use to authenticate the request determines whether the request is live mode or test mode. \n\nThe Mambu API differs for every client as we can customize according to the client needs and functional areas. ",
     "contact": {
-      "name": "Mambu"
-    }
+      "name": "Mambu",
+      "url": "https://www.mambu.com/",
+      "email": "support@mambu.com"
+    },
+    "termsOfService": "https://www.mambu.com/"
   },
   "host": "localhost:8889",
   "basePath": "/api",
@@ -25,8 +28,8 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Returns detailed information about a specific task based on its ID or encoded key.",
-        "description": "",
+        "summary": "Retrieves a task",
+        "description": "Returns detailed information about a specific task based on its ID or encoded key. ",
         "operationId": "getById",
         "consumes": [
           "application/json"
@@ -73,6 +76,10 @@
           {
             "type": "string",
             "in": "header"
+          },
+          {
+            "type": "string",
+            "in": "query"
           }
         ],
         "responses": {
@@ -169,17 +176,13 @@
             }
           }
         },
-        "security": [
-          {
-            "basic": []
-          }
-        ]
+        "security": []
       },
       "put": {
         "tags": [
           "Tasks"
         ],
-        "summary": "Updates attribute values for a specific task.",
+        "summary": "Updates a task",
         "description": "Updates a task. This can be used to update a task's configuration, or to update its completion state. You can update multiple attributes of the same task in the same request.",
         "operationId": "update",
         "consumes": [
@@ -323,17 +326,13 @@
             }
           }
         },
-        "security": [
-          {
-            "basic": []
-          }
-        ]
+        "security": []
       },
       "delete": {
         "tags": [
           "Tasks"
         ],
-        "summary": "Deletes specific task from the collection based on their IDs or encode key.",
+        "summary": "Deletes a task",
         "description": "Deletes specific task from the collection based on their IDs or encode key.",
         "operationId": "delete",
         "consumes": [
@@ -431,17 +430,13 @@
             }
           }
         },
-        "security": [
-          {
-            "basic": []
-          }
-        ]
+        "security": []
       },
       "patch": {
         "tags": [
           "Tasks"
         ],
-        "summary": "Partially update an existing task",
+        "summary": "Partially updates an existing task",
         "description": "",
         "operationId": "patch",
         "consumes": [
@@ -569,11 +564,7 @@
             }
           }
         },
-        "security": [
-          {
-            "basic": []
-          }
-        ]
+        "security": []
       }
     },
     "/tasks": {
@@ -581,7 +572,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Allows retrieval of tasks using various query parameters",
+        "summary": "Retrieves all tasks",
         "description": "Retrieves a list of all the tasks. This endpoint supports pagination. \n",
         "operationId": "getAll",
         "consumes": [
@@ -761,17 +752,13 @@
             }
           }
         },
-        "security": [
-          {
-            "basic": []
-          }
-        ]
+        "security": []
       },
       "post": {
         "tags": [
           "Tasks"
         ],
-        "summary": "Create a new task. The status will be set as OPEN.",
+        "summary": "Creates a new task.",
         "description": "Create/Update a task with a title and description and assign it to a user, associate with an object, and give it an optional due date for completion. Prompts an action for an asignee to complete a task with optional due date. If the encoded key is provided, an update will be executed. Updates can also be done via POST, but only by using JSON Encoding.",
         "operationId": "create",
         "consumes": [
@@ -889,17 +876,15 @@
             }
           }
         },
-        "security": [
-          {
-            "basic": []
-          }
-        ]
+        "security": []
       }
     }
   },
   "securityDefinitions": {
-    "basic": {
-      "type": "basic"
+    "API Key - 1": {
+      "name": "API Key",
+      "type": "apiKey",
+      "in": "query"
     }
   },
   "definitions": {
@@ -2113,6 +2098,7 @@
     "application/json"
   ],
   "consumes": [
-    "multipart/form-data"
+    "application/xml",
+    "application/javascript"
   ]
 }
