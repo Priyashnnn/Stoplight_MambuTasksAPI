@@ -24,7 +24,7 @@
           "Tasks"
         ],
         "summary": "Returns detailed information about a specific task based on its ID or encoded key.",
-        "description": "",
+        "description": "Returns detailed information about a specific task based on its ID or encoded key.",
         "operationId": "getById",
         "consumes": [
           "application/json"
@@ -39,6 +39,34 @@
             "description": "The id or encoded key of the task",
             "required": true,
             "type": "string"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "username",
+            "description": "The username of the user to which the task is assigned to"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "clientId",
+            "description": "The id of the client to which the task is linked to"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "groupId",
+            "description": "The id of the group to which the task is linked to"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "status",
+            "description": "The task status: (OPEN, COMPLETED, OVERDUE) - if not provide defaulted to OPEN"
+          },
+          {
+            "type": "string",
+            "in": "header"
           }
         ],
         "responses": {
@@ -46,30 +74,92 @@
             "description": "Task retrieved",
             "schema": {
               "$ref": "#/definitions/Task"
+            },
+            "examples": {
+              "Example Value": {
+                "lastModifiedDate": "2016-09-06T13:37:50+03:00",
+                "createdByUserKey": "string",
+                "dueDate": "1987-04-26",
+                "description": "string",
+                "creationDate": "2016-09-06T13:37:50+03:00",
+                "title": "string",
+                "taskLinkKey": "string",
+                "createdByFullName": "string",
+                "encodedKey": "string",
+                "id": 0,
+                "assignedUserKey": "string",
+                "taskLinkType": "CLIENT",
+                "status": "OPEN"
+              },
+              "example-2": {}
             }
           },
           "400": {
             "description": "A Validation error occurred",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "401": {
             "description": "UNAUTHORIZED",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "403": {
             "description": "Forbidden",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "404": {
             "description": "Task not found",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           }
         },
@@ -107,6 +197,30 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/Task"
+            },
+            "x-examples": {
+              "example-1": {
+                "dueDate": "1987-04-26",
+                "description": "string",
+                "title": "string",
+                "taskLinkKey": "string",
+                "id": 0,
+                "assignedUserKey": "string",
+                "taskLinkType": "CLIENT",
+                "status": "OPEN"
+              }
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The task to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Task"
+            },
+            "x-examples": {
+              "example-1": {}
             }
           }
         ],
@@ -115,30 +229,91 @@
             "description": "Task updated",
             "schema": {
               "$ref": "#/definitions/Task"
+            },
+            "examples": {
+              "example-1": {
+                "lastModifiedDate": "2016-09-06T13:37:50+03:00",
+                "createdByUserKey": "string",
+                "dueDate": "1987-04-26",
+                "description": "string",
+                "creationDate": "2016-09-06T13:37:50+03:00",
+                "title": "string",
+                "taskLinkKey": "string",
+                "createdByFullName": "string",
+                "encodedKey": "string",
+                "id": 0,
+                "assignedUserKey": "string",
+                "taskLinkType": "CLIENT",
+                "status": "OPEN"
+              }
             }
           },
           "400": {
             "description": "A Validation error occurred",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "401": {
             "description": "UNAUTHORIZED",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "403": {
             "description": "Forbidden",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "404": {
             "description": "Task not found",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           }
         },
@@ -176,30 +351,77 @@
         ],
         "responses": {
           "204": {
-            "description": "Task deleted"
+            "description": "Task deleted",
+            "examples": {
+              "example-1": {}
+            }
           },
           "400": {
             "description": "A Validation error occurred",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "401": {
             "description": "UNAUTHORIZED",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "403": {
             "description": "Forbidden",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "404": {
             "description": "Task not found",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           }
         },
@@ -240,6 +462,31 @@
               "items": {
                 "$ref": "#/definitions/PatchOperation"
               }
+            },
+            "x-examples": {
+              "example-1": [
+                {
+                  "op": "ADD",
+                  "path": "string",
+                  "from": "string",
+                  "value": {}
+                }
+              ]
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Patch operations to be applied to a resource",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PatchOperation"
+              }
+            },
+            "x-examples": {
+              "example-1": {}
             }
           }
         ],
@@ -251,24 +498,68 @@
             "description": "A Validation error occurred",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "401": {
             "description": "UNAUTHORIZED",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "403": {
             "description": "Forbidden",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "404": {
             "description": "Task not found",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           }
         },
@@ -391,24 +682,76 @@
               "items": {
                 "$ref": "#/definitions/Task"
               }
+            },
+            "examples": {
+              "example-1": [
+                {
+                  "lastModifiedDate": "2016-09-06T13:37:50+03:00",
+                  "createdByUserKey": "string",
+                  "dueDate": "1987-04-26",
+                  "description": "string",
+                  "creationDate": "2016-09-06T13:37:50+03:00",
+                  "title": "string",
+                  "taskLinkKey": "string",
+                  "createdByFullName": "string",
+                  "encodedKey": "string",
+                  "id": 0,
+                  "assignedUserKey": "string",
+                  "taskLinkType": "CLIENT",
+                  "status": "OPEN"
+                }
+              ]
             }
           },
           "400": {
             "description": "A Validation error occurred",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "401": {
             "description": "UNAUTHORIZED",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "403": {
             "description": "Forbidden",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           }
         },
@@ -448,7 +791,30 @@
               "$ref": "#/definitions/Task"
             },
             "x-examples": {
-              "example-1": {}
+              "example-1": {
+                "dueDate": "1987-04-26",
+                "description": "string",
+                "title": "string",
+                "taskLinkKey": "string",
+                "id": 0,
+                "assignedUserKey": "string",
+                "taskLinkType": "CLIENT",
+                "status": "OPEN"
+              },
+              "example-2": {}
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Task to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Task"
+            },
+            "x-examples": {
+              "example-1": {},
+              "example-2": {}
             }
           },
           {
@@ -466,30 +832,81 @@
         ],
         "responses": {
           "102": {
-            "description": "Your idempotent request was already submitted and is currently being processed, try again later."
+            "description": "Your idempotent request was already submitted and is currently being processed, try again later.",
+            "examples": {}
           },
           "201": {
             "description": "Task created",
             "schema": {
               "$ref": "#/definitions/Task"
+            },
+            "examples": {
+              "example-1": {
+                "lastModifiedDate": "2016-09-06T13:37:50+03:00",
+                "createdByUserKey": "string",
+                "dueDate": "1987-04-26",
+                "description": "string",
+                "creationDate": "2016-09-06T13:37:50+03:00",
+                "title": "string",
+                "taskLinkKey": "string",
+                "createdByFullName": "string",
+                "encodedKey": "string",
+                "id": 0,
+                "assignedUserKey": "string",
+                "taskLinkType": "CLIENT",
+                "status": "OPEN"
+              }
             }
           },
           "400": {
             "description": "A Validation error occurred",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "401": {
             "description": "UNAUTHORIZED",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           },
           "403": {
             "description": "Forbidden",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "example-1": {
+                "errors": [
+                  {
+                    "errorCode": 0,
+                    "errorSource": "string",
+                    "errorReason": "SUCCESS"
+                  }
+                ]
+              }
             }
           }
         },
@@ -597,7 +1014,12 @@
           ]
         }
       },
-      "description": "Represents a human task that can be assigned by a user to another. When a Task is created, it's set to status OPEN"
+      "description": "Represents a human task that can be assigned by a user to another. When a Task is created, it's set to status OPEN",
+      "x-examples": {
+        "example-1": {},
+        "example-2": {}
+      },
+      "title": ""
     },
     "RestError": {
       "type": "object",
@@ -1689,6 +2111,9 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/PatchOperation"
+      },
+      "x-examples": {
+        "example-1": {}
       }
     },
     "ErrorResponse": {
@@ -1700,6 +2125,9 @@
             "$ref": "#/definitions/RestError"
           }
         }
+      },
+      "x-examples": {
+        "example-1": {}
       }
     }
   }
