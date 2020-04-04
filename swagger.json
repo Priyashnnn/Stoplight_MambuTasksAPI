@@ -3,7 +3,7 @@
   "info": {
     "version": "v3",
     "title": "Tasks",
-    "description": "The Mambu Tasks API allows you to create tasks that you can assign to users or link it to a group of users to keep track of your daily management activities. A task can be an action performed by a user or group of users such as following up on a repayment or other to-do items. You can assign tasks with a due date, add notes describing the task and mark closed when complete.\n\nThe Tasks API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. We have language bindings in cURL, HTTP, JavaScript, Node.js, Ruby, Python, Java, and Go! You can view the code samples and programming examples throughout the document. \n\nYou can use the Tasks API in test mode, which does not affect your live data or interact with your networks. The ID or encoded key you use to authenticate the request determines whether the request is live mode or test mode. \n\nThe Mambu API differs for every client as we can customize according to the client needs and functional areas. ",
+    "description": "The Mambu Tasks API allows you to create tasks that you can assign to users or link it to a group of users to keep track of your daily management activities. A task can be an action performed by a user or group such as following up on a repayment or other to-do items. You can assign tasks with a due date, add notes describing the task and mark closed when complete. This APIs let you perform create, retrieve, update and delete operation on the Tasks resource.\n\nThe Tasks API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. We have language bindings in cURL, HTTP, JavaScript, Node.js, Ruby, Python, Java, and Go! You can view the code samples and programming examples throughout this documentation. \n\nYou can use the Tasks API in test mode, which does not affect your live data or interact with your networks. The ID or encoded key you use to authenticate the request determines whether the request is live mode or test mode. \n\nThe Mambu API differs for every client as we can customize according to the client needs and functional areas. ",
     "contact": {
       "name": "Mambu",
       "url": "https://www.mambu.com/",
@@ -28,8 +28,8 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Retrieves a task",
-        "description": "To retrieve a task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint e.g. https://localhost:8889/api/tasks/{taskId} to fetch the task value associated with the task. \n\nPass the “clientId” or “groupId” in the JSON body to specify the user.\nYou can also provide the additional parameters, “FromDate” and “ToDate” to find tasks between a specific time frame.\nUse “StatusCode” = “0” to find incomplete tasks and “1” to find completed tasks.",
+        "summary": "Get Task",
+        "description": "Lets you retireve a task. To retrieve a task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint e.g. https://localhost:8889/api/tasks/{taskId} to fetch the task value associated with the task. \n\nPass the “clientId” or “groupId” in the JSON body to specify the user.\nYou can also provide the additional parameters, “FromDate” and “ToDate” to find tasks between a specific time frame.\nUse “StatusCode” = “0” to find incomplete tasks and “1” to find completed tasks.",
         "operationId": "getById",
         "consumes": [
           "application/json"
@@ -104,7 +104,7 @@
             }
           },
           "400": {
-            "description": "A Validation error occurred",
+            "description": "A Validation error occurred. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -121,7 +121,7 @@
             }
           },
           "401": {
-            "description": "UNAUTHORIZED",
+            "description": "An unauthorized error occured. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -138,7 +138,7 @@
             }
           },
           "403": {
-            "description": "Forbidden",
+            "description": "A forbidden error occured. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -178,8 +178,8 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Updates a task",
-        "description": "Updates a task. This can be used to update a task's configuration, or to update its completion state. You can update multiple attributes of the same task in the same request.",
+        "summary": "Update a Task",
+        "description": "Lets you update a task. This can be used to update a task's configuration, or its completion state. You can update multiple attributes of the same task in the same request.\n\nYou can either pass the “ClientId” or the “Encoded Key” in the JSON body to update the task owner.\n\nLets you mark a task as complete. Specify the “TaskId” in the API URL.\n",
         "operationId": "update",
         "consumes": [
           "application/json"
@@ -227,11 +227,15 @@
             "x-examples": {
               "example-1": {}
             }
+          },
+          {
+            "type": "string",
+            "in": "query"
           }
         ],
         "responses": {
           "200": {
-            "description": "Task updated",
+            "description": "Updates a task, specifying the updated value of the task. ",
             "schema": {
               "$ref": "#/definitions/Task"
             },
@@ -254,7 +258,7 @@
             }
           },
           "400": {
-            "description": "A Validation error occurred",
+            "description": "A validation error occurred. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -271,7 +275,7 @@
             }
           },
           "401": {
-            "description": "UNAUTHORIZED",
+            "description": "An unauthorized error occurred. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -288,7 +292,7 @@
             }
           },
           "403": {
-            "description": "Forbidden",
+            "description": "A forbidden error occurred. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -305,7 +309,7 @@
             }
           },
           "404": {
-            "description": "Task not found",
+            "description": "Task not found. Returns an error when the task could not be found or the user does not have access to the file the task is assigned to.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -328,8 +332,8 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Deletes a task",
-        "description": "Deletes specific task from the collection based on their IDs or encode key.",
+        "summary": "Delete a Task",
+        "description": "Deletes specific task from the collection based on the ID or encode key.",
         "operationId": "delete",
         "consumes": [
           "application/json"
@@ -358,7 +362,7 @@
             }
           },
           "400": {
-            "description": "A Validation error occurred",
+            "description": "A Validation error occurred. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -375,7 +379,7 @@
             }
           },
           "401": {
-            "description": "UNAUTHORIZED",
+            "description": "An unauthorized error occured. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -392,7 +396,7 @@
             }
           },
           "403": {
-            "description": "Forbidden",
+            "description": "A forbidden error occured. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -432,7 +436,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Partially updates an existing task",
+        "summary": "Partially update an existing task",
         "description": "",
         "operationId": "patch",
         "consumes": [
@@ -485,14 +489,28 @@
             "x-examples": {
               "example-1": {}
             }
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "taskId",
+            "description": "The id or encoded key of the task",
+            "required": true
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "body",
+            "description": "Patch operations to be applied to a resource",
+            "required": true
           }
         ],
         "responses": {
           "204": {
-            "description": "Task updated"
+            "description": "Updates a task, specifying the updated value of the task."
           },
           "400": {
-            "description": "A Validation error occurred",
+            "description": "A validation error occurred. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -509,7 +527,7 @@
             }
           },
           "401": {
-            "description": "UNAUTHORIZED",
+            "description": "An unauthorized error occurred. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -526,7 +544,7 @@
             }
           },
           "403": {
-            "description": "Forbidden",
+            "description": "A forbidden error occurred. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -543,7 +561,7 @@
             }
           },
           "404": {
-            "description": "Task not found",
+            "description": "Task not found. Returns an error when the task could not be found or the user does not have access to the file the task is assigned to.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -568,7 +586,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Retrieves all tasks",
+        "summary": "Get all Tasks",
         "description": "Retrieves a list of all the tasks. This endpoint supports pagination. \n",
         "operationId": "getAll",
         "consumes": [
@@ -652,7 +670,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns a list of tasks on a file. If there are no tasks on this file an empty collection is returned instead.",
+            "description": "Returns a list of tasks on th eresource. If there are no tasks, an empty collection is returned instead.",
             "headers": {
               "Items-Limit": {
                 "type": "integer",
@@ -697,7 +715,7 @@
             }
           },
           "400": {
-            "description": "A Validation error occurred",
+            "description": "A validation error occurred. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -714,7 +732,7 @@
             }
           },
           "401": {
-            "description": "UNAUTHORIZED",
+            "description": "An unauthorized error occurred. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -731,7 +749,7 @@
             }
           },
           "403": {
-            "description": "Forbidden",
+            "description": "A forbidden error occurred. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -754,8 +772,8 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Creates a new task.",
-        "description": "Create/Update a task with a title and description and assign it to a user, associate with an object, and give it an optional due date for completion. Prompts an action for an asignee to complete a task with optional due date. If the encoded key is provided, an update will be executed. Updates can also be done via POST, but only by using JSON Encoding.",
+        "summary": "Create a Task",
+        "description": "Create a task with a title and description and assign it to a user, associate with an object, and give it an optional due date for completion. Prompts an action for an asignee to complete a task with optional due date. If the encoded key is provided, an update will be executed. Updates can also be done via POST, but only by using JSON Encoding.\n\nYou can either provide the “clientId” or “Encoded Key” in the JSON body. The “TaskType” is the type of task you want to create. To retrieve the list of task types, use the Get All Tasks API.\n\nNote: The “Due Date” and “EndDate” parameters are optional. If you don’t pass them, the due date will be taken as the current day and the appointment will be created with the default duration specified in the task type configuration.",
         "operationId": "create",
         "consumes": [
           "application/json"
@@ -842,7 +860,7 @@
             }
           },
           "401": {
-            "description": "UNAUTHORIZED",
+            "description": "An unauthorized error occurred. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -859,7 +877,7 @@
             }
           },
           "403": {
-            "description": "Forbidden",
+            "description": "A forbidden error occurred. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
