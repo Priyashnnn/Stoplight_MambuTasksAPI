@@ -437,7 +437,7 @@
           "Tasks"
         ],
         "summary": "Partially update an existing task",
-        "description": "",
+        "description": "Lets you update a task allowing you to makes changes to part of the task such as changing its properties. ",
         "operationId": "patch",
         "consumes": [
           "application/json"
@@ -773,7 +773,7 @@
           "Tasks"
         ],
         "summary": "Create a Task",
-        "description": "Create a task with a title and description and assign it to a user, associate with an object, and give it an optional due date for completion. Prompts an action for an asignee to complete a task with optional due date. If the encoded key is provided, an update will be executed. Updates can also be done via POST, but only by using JSON Encoding.\n\nYou can either provide the “clientId” or “Encoded Key” in the JSON body. The “TaskType” is the type of task you want to create. To retrieve the list of task types, use the Get All Tasks API.\n\nNote: The “Due Date” and “EndDate” parameters are optional. If you don’t pass them, the due date will be taken as the current day and the appointment will be created with the default duration specified in the task type configuration.",
+        "description": "Create a task with a title and description and assign it to a user, associate with an object, and give it an optional due date for completion. Prompts an action for an asignee to complete a task with optional due date. If the encoded key is provided, an update will be executed. Updates can also be done via POST, but only by using JSON Encoding.\n\nYou can either provide the “clientId” or “Encoded Key” in the JSON body. The “TaskType” is the type of task you want to create. To retrieve the list of task types, use the Get All Tasks API.\n\nNote 1: The “Due Date” parameter isoptional. If you don’t pass them, the due date will be taken as the current day and the appointment will be created with the default duration specified in the task type configuration.",
         "operationId": "create",
         "consumes": [
           "application/json"
