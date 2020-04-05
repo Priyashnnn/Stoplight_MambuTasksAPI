@@ -29,7 +29,7 @@
           "Tasks"
         ],
         "summary": "Get Task",
-        "description": "Lets you retireve a task that can be filtered by user key or client key. To retrieve a task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint e.g. https://localhost:8889/api/tasks/{taskId} to fetch the task value associated with the task. \n\nPass the `clientId` or `groupId` in the JSON body to specify the user.\nYou can also provide the additional parameters, `FromDate` and `ToDate` to find tasks between a specific time frame.\nUse \"StatusCode\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. Staus code is set to open by default. \n",
+        "description": "Lets you retireve a task that can be filtered by user key or client key. To retrieve a task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint e.g. https://localhost:8889/api/tasks/{taskId} to fetch the task value associated with the task. \n\nPass the `clientId` or `groupId` in the JSON body to specify the user.\nYou can also provide the additional parameter, `DueDate` to find tasks on specific date.\nUse \"StatusCode\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. Staus code is set to open by default. \n",
         "operationId": "getById",
         "consumes": [
           "application/json"
@@ -115,7 +115,7 @@
             }
           },
           "400": {
-            "description": "A Validation error occurred. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
+            "description": "Bad Request. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -132,7 +132,7 @@
             }
           },
           "401": {
-            "description": "An unauthorized error occured. This indicates that the request sent by the user could not be authenticated.",
+            "description": "Unauthorized. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -149,7 +149,7 @@
             }
           },
           "403": {
-            "description": "A forbidden error occured. This means that the user do not have permission to view the requested file or resource.",
+            "description": "Forbidden. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -190,7 +190,7 @@
           "Tasks"
         ],
         "summary": "Update a Task",
-        "description": "Lets you update a task. This can be used to update a task's configuration, or its completion state. You can update multiple attributes of the same task in the same request.\n\nSpecify the `TaskId` in the API URL.\n",
+        "description": "Lets you update a task. This can be used to update a task's configuration, or its completion state. You can update multiple attributes of the same task in the same request.\n\nSpecify the `TaskId` in the API URL.\n\n<!--\ntitle: \"POST /api/tasks/\"\nlineNumbers: true\n-->\n```\n{\n   \"task\":{\n      \"dueDate\":\"2014-02-11T15:36:34+0000\",\n      \"title\":\"Create a new client\",\n      \"description\":\"Create a new client named John Smith with home phone (44)333-8989 and address 123 Main Street\",\n      \"status\":\"OPEN\",\n      \"assignedUserKey\":\"8a33ae49441c4fe101441c5fe42f0005\"\n   }\n}\n```\n",
         "operationId": "update",
         "consumes": [
           "application/json"
@@ -347,7 +347,7 @@
           "Tasks"
         ],
         "summary": "Delete a Task",
-        "description": "Deletes specific task from the resource based on the Id or encoded Key.\n\n<!--\ntitle: \"Delete a task based on id\"\nlineNumbers: true\n-->\n```\nDELETE /api/tasks/2\n```\n<!--\ntitle: \"Delete a task based on encoded key\"\nlineNumbers: true\n-->\n```\nDELETE /api/tasks/8a33ae49441c4fe101441c71581203a6\n```\nOn successful deletion of task, returns response code `204`\n\n<!--\ntitle: \"Success return code\"\nlineNumbers: true\n-->\n```\n{\n    \"returnCode\":0,\n    \"returnStatus\":\"SUCCESS\"\n}\n```\n",
+        "description": "Deletes specific task from the resource based on the Id or encoded Key. On successful deletion of task, returns response code `204`\n\n<!--\ntitle: \"Delete a task based on id\"\nlineNumbers: true\n-->\n```\nDELETE /api/tasks/2\n```\n<!--\ntitle: \"Delete a task based on encoded key\"\nlineNumbers: true\n-->\n```\nDELETE /api/tasks/8a33ae49441c4fe101441c71581203a6\n```\n<!--\ntitle: \"Success return code `204`\"\nlineNumbers: true\n-->\n```\n{\n    \"returnCode\":0,\n    \"returnStatus\":\"SUCCESS\"\n}\n```\n",
         "operationId": "delete",
         "consumes": [
           "application/json"
@@ -364,13 +364,25 @@
             "type": "string"
           },
           {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            },
+            "description": "```\nDELETE https://localhost:8889/api/tasks/{taskId} HTTP/1.1\nHost: localhost:8889\nAccept: application/vnd.mambu.v2+json\n```"
+          },
+          {
             "type": "string",
-            "in": "header"
+            "in": "query",
+            "name": "taskId",
+            "description": "The id or encoded key of the task",
+            "required": true
           }
         ],
         "responses": {
           "204": {
-            "description": "Deletes Task. Returns an empty response when the task was successfully deleted.\n\n",
+            "description": "Deletes Task. Returns response code `204`\n\n",
             "examples": {
               "example-1": {
                 "returnCode": 0,
@@ -379,72 +391,32 @@
             }
           },
           "400": {
-            "description": "A Validation error occurred. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
+            "description": "Bad request.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           },
           "401": {
-            "description": "An unauthorized error occured. This indicates that the request sent by the user could not be authenticated.",
+            "description": "Unauthorized. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           },
           "403": {
-            "description": "A forbidden error occured. This means that the user do not have permission to view the requested file or resource.",
+            "description": "Forbidden. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           },
           "404": {
-            "description": "Task not found. Returns an error when the task could not be found or the user does not have access to the file the task is assigned to.",
+            "description": "Task not found. ",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           }
         },
         "security": []
@@ -604,7 +576,7 @@
           "Tasks"
         ],
         "summary": "Get all Tasks",
-        "description": "Lets you retireve all tasks for the given ID. To retrieve all task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint to fetch the task value associated with the task. \n\nPass the clientId or groupId in the JSON body to specify the user.\n\nYou can also provide the additional parameters, FromDate and ToDate to find tasks between a specific time frame.\nUse \"Status\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. If no status is specified, all open tasks are retrieved, as status is set to `OPEN` by default. \n\n`Get all Tasks` supports pagination, however it is disabled by default. `PaginationDetails` specifies whether the pagination should be enabled or not. \n\n<!--\ntitle: \"Example: Gets all tasks for the client with id 16 - Fetches all open tasks\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16\n```\n<!--\ntitle: \"Example: Gets all completed tasks for the client with id 16\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16&status=COMPLETED\n```\n<!--\ntitle: \"Example: Gets all completed tasks for the client with id 16\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16&status=COMPLETED\n```\n<!--\ntitle: \"Example: Get the tasks paginated for the user with the username demo\"\nlineNumbers: true\n-->\n```\nGET  api/tasks?username=demo\n```",
+        "description": "Lets you retireve tasks using various query parameters. To retrieve all task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint to fetch the task value associated with the task. \n\nPass the clientId or groupId in the JSON body to specify the user.\n\nUse \"Status\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. If no status is specified, all open tasks are retrieved, as status is set to `OPEN` by default. \n<!--\ntitle: \"Example: Gets all tasks for the client with id 16 - Fetches all open tasks\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16\n```\n<!--\ntitle: \"Example: Gets all completed tasks for the client with id 16\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16&status=COMPLETED\n```\n`Get all Tasks` supports pagination, however it is disabled by default. `PaginationDetails` specifies whether the pagination should be enabled or not. \n<!--\ntitle: \"Example: Get the tasks paginated for the user with the username demo\"\nlineNumbers: true\n-->\n```\nGET  api/tasks?username=demo\n```\n",
         "operationId": "getAll",
         "consumes": [
           "application/json"
@@ -683,6 +655,15 @@
               "OPEN",
               "COMPLETED"
             ]
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            },
+            "description": "```\nGET https://localhost:8889/api/tasks HTTP/1.1\nHost: localhost:8889\nAccept: application/vnd.mambu.v2+json\n```"
           }
         ],
         "responses": {
@@ -732,55 +713,25 @@
             }
           },
           "400": {
-            "description": "A validation error occurred. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
+            "description": "Bad request. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           },
           "401": {
-            "description": "An unauthorized error occurred. This indicates that the request sent by the user could not be authenticated.",
+            "description": "UNAUTHORIZED. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           },
           "403": {
-            "description": "A forbidden error occurred. This means that the user do not have permission to view the requested file or resource.",
+            "description": "Forbidden. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           }
         },
         "security": []
