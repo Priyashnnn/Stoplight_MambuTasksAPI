@@ -190,7 +190,7 @@
           "Tasks"
         ],
         "summary": "Update a Task",
-        "description": "Lets you update a task. This can be used to update a task's configuration, or its completion state. You can update multiple attributes of the same task in the same request.\n\nSpecify the `TaskId` in the API URL.\n\n<!--\ntitle: \"POST /api/tasks/\"\nlineNumbers: true\n-->\n```\n{\n   \"task\":{\n      \"dueDate\":\"2014-02-11T15:36:34+0000\",\n      \"title\":\"Create a new client\",\n      \"description\":\"Create a new client named John Smith with home phone (44)333-8989 and address 123 Main Street\",\n      \"status\":\"OPEN\",\n      \"assignedUserKey\":\"8a33ae49441c4fe101441c5fe42f0005\"\n   }\n}\n```\n",
+        "description": "Lets you update a task. This can be used to update a task's configuration, or its completion state. You can update multiple attributes of the same task in the same request.\n\nSpecify the `TaskId` in the API URL.\n\n<!--\ntitle: \"POST /api/tasks/\"\nlineNumbers: true\n-->\n```\nPUT https://localhost:8889/api/tasks/{taskId} HTTP/1.1\nHost: localhost:8889\nContent-Type: application/json\nAccept: application/vnd.mambu.v2+json\n```\n",
         "operationId": "update",
         "consumes": [
           "application/json"
@@ -245,6 +245,13 @@
             "name": "taskId",
             "description": "The id or encoded key of the task",
             "required": true
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "body",
+            "description": "The task to be updated",
+            "required": true
           }
         ],
         "responses": {
@@ -272,7 +279,7 @@
             }
           },
           "400": {
-            "description": "A validation error occurred. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
+            "description": "Bad request. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -289,7 +296,7 @@
             }
           },
           "401": {
-            "description": "An unauthorized error occurred. This indicates that the request sent by the user could not be authenticated.",
+            "description": "Unauthorized. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -306,7 +313,7 @@
             }
           },
           "403": {
-            "description": "A forbidden error occurred. This means that the user do not have permission to view the requested file or resource.",
+            "description": "Forbidden. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -323,7 +330,7 @@
             }
           },
           "404": {
-            "description": "Task not found. Returns an error when the task could not be found or the user does not have access to the file the task is assigned to.",
+            "description": "Task not found. ",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -426,7 +433,7 @@
           "Tasks"
         ],
         "summary": "Partially update an existing task",
-        "description": "Lets you update a task allowing you to makes changes to part of the task such as changing its properties. ",
+        "description": "Lets you update a task allowing you to makes changes to part of the task such as changing its properties. \n\nThe `body` parameter is an array allowing patch operations to be applied to a resource.\n\n<!--\ntitle: \"PATCH /api/tasks/\"\nlineNumbers: true\n-->\n```\nPATCH https://localhost:8889/api/tasks/{taskId} HTTP/1.1\nHost: localhost:8889\nContent-Type: application/json\nAccept: application/vnd.mambu.v2+json\n```",
         "operationId": "patch",
         "consumes": [
           "application/json"
@@ -445,7 +452,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Patch operations to be applied to a resource",
+            "description": "[\n  {\n    \"from\": \"string\",\n    \"op\": \"ADD\",\n    \"path\": \"string\",\n    \"value\": {}\n  }\n]",
             "required": true,
             "schema": {
               "type": "array",
@@ -453,16 +460,7 @@
                 "$ref": "#/definitions/PatchOperation"
               }
             },
-            "x-examples": {
-              "example-1": [
-                {
-                  "op": "ADD",
-                  "path": "string",
-                  "from": "string",
-                  "value": {}
-                }
-              ]
-            }
+            "x-examples": {}
           },
           {
             "in": "body",
@@ -487,7 +485,7 @@
             "required": true
           },
           {
-            "type": "string",
+            "type": "array",
             "in": "query",
             "name": "body",
             "description": "Patch operations to be applied to a resource",
@@ -496,10 +494,13 @@
         ],
         "responses": {
           "204": {
-            "description": "Updates a task, specifying the updated value of the task."
+            "description": "Updates a task. No content returned. ",
+            "examples": {
+              "No content": {}
+            }
           },
           "400": {
-            "description": "A validation error occurred. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
+            "description": "Bad request. This indicates that the server was unable to process the request sent by the user due to invalid syntax.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
@@ -508,63 +509,33 @@
                 "errors": [
                   {
                     "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
+                    "errorReason": "SUCCESS",
+                    "errorSource": "string"
                   }
                 ]
               }
             }
           },
           "401": {
-            "description": "An unauthorized error occurred. This indicates that the request sent by the user could not be authenticated.",
+            "description": "Unauthorized. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           },
           "403": {
-            "description": "A forbidden error occurred. This means that the user do not have permission to view the requested file or resource.",
+            "description": "Forbidden. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           },
           "404": {
-            "description": "Task not found. Returns an error when the task could not be found or the user does not have access to the file the task is assigned to.",
+            "description": "Task not found. ",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           }
         },
         "security": []
