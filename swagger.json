@@ -790,7 +790,7 @@
           "Tasks"
         ],
         "summary": "Create a Task",
-        "description": "Create a task with a title and description and assign it to a user, associate with an object, and give it a due date for completion. Prompts an action for an asignee to complete a task with due date. you can also update the task via `POST`, only by using JSON encoding. \n\n**Note 1**: The parameters `Title`, `Username` and `Due Date` are required. It is recommended to use meaningful text for title and description for better search results. \n\n<!--\ntitle: \"Example: GCreate a task to review a loan for client id 64 due on 2011-06-16\"\nlineNumbers: true\n-->\n```\nPOST /api/tasks/ \"title=Review Loan&duedate=2011-06-16&username=demo&clientid=64&description=Please check the automatically created loan application for this client.\"\n```",
+        "description": "Create a task with a title and description and assign it to a user, associate with an object, and give it a due date for completion. Prompts an action for an asignee to complete a task with due date. The status is set as `OPEN` by default. you can also update the task via `POST`, only by using JSON encoding. \n\n\n**Note 1**: The parameters `Title`, `Username` and `DueDate` are required. It is recommended to use meaningful text for title and description for better search results. \n\n<!--\ntitle: \"POST /api/tasks/\"\nlineNumbers: true\n-->\n```\n{\n   \"task\":{\n      \"dueDate\":\"2014-02-11T15:36:34+0000\",\n      \"title\":\"Create a new client\",\n      \"description\":\"Create a new client named John Smith with home phone (44)333-8989 and address 123 Main Street\",\n      \"status\":\"OPEN\",\n      \"assignedUserKey\":\"8a33ae49441c4fe101441c5fe42f0005\"\n   }\n}\n```\n<!--\ntitle: \"Example: Create a task to review a loan for client id 64 due on 2011-06-16\"\nlineNumbers: true\n-->\n```\nPOST /api/tasks/ \"title=Review Loan&duedate=2011-06-16&username=demo&clientid=64&description=Please check the automatically created loan application for this client.\"\n```",
         "operationId": "create",
         "consumes": [
           "application/json"
@@ -814,9 +814,7 @@
             "schema": {
               "$ref": "#/definitions/Task"
             },
-            "x-examples": {
-              "example-1": {}
-            }
+            "x-examples": {}
           },
           {
             "in": "formData",
@@ -825,10 +823,6 @@
           {
             "in": "formData",
             "type": "string"
-          },
-          {
-            "type": "string",
-            "in": "header"
           },
           {
             "type": "string",
@@ -876,7 +870,7 @@
             "examples": {}
           },
           "201": {
-            "description": "Returns the newly created task.",
+            "description": "Success. Returns the newly created task.",
             "schema": {
               "$ref": "#/definitions/Task"
             },
@@ -899,55 +893,25 @@
             }
           },
           "400": {
-            "description": "Returned if the request parameters or body is not valid.",
+            "description": "Bad Request. Returned if the request parameters or body is not valid.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           },
           "401": {
-            "description": "An unauthorized error occurred. This indicates that the request sent by the user could not be authenticated.",
+            "description": "UNAUTHORIZED. This indicates that the request sent by the user could not be authenticated.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           },
           "403": {
-            "description": "A forbidden error occurred. This means that the user do not have permission to view the requested file or resource.",
+            "description": "Forbidden. This means that the user do not have permission to view the requested file or resource.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-            "examples": {
-              "example-1": {
-                "errors": [
-                  {
-                    "errorCode": 0,
-                    "errorSource": "string",
-                    "errorReason": "SUCCESS"
-                  }
-                ]
-              }
-            }
+            "examples": {}
           }
         },
         "security": []
