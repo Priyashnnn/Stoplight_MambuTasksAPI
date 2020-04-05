@@ -29,7 +29,7 @@
           "Tasks"
         ],
         "summary": "Get Task",
-        "description": "Lets you retireve a task. To retrieve a task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint e.g. https://localhost:8889/api/tasks/{taskId} to fetch the task value associated with the task. \n\nPass the `clientId` or `groupId` in the JSON body to specify the user.\nYou can also provide the additional parameters, `FromDate` and `ToDate` to find tasks between a specific time frame.\nUse \"StatusCode\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. Staus code is set to open by default. \n",
+        "description": "Lets you retireve a task that can be filtered by user key or client key. To retrieve a task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint e.g. https://localhost:8889/api/tasks/{taskId} to fetch the task value associated with the task. \n\nPass the `clientId` or `groupId` in the JSON body to specify the user.\nYou can also provide the additional parameters, `FromDate` and `ToDate` to find tasks between a specific time frame.\nUse \"StatusCode\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. Staus code is set to open by default. \n",
         "operationId": "getById",
         "consumes": [
           "application/json"
@@ -604,7 +604,7 @@
           "Tasks"
         ],
         "summary": "Get all Tasks",
-        "description": "Lets you retireve all tasks. To retrieve all task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint to fetch the task value associated with the task. \n\nPass the clientId or groupId in the JSON body to specify the user.\n\nYou can also provide the additional parameters, FromDate and ToDate to find tasks between a specific time frame.\nUse \"Status\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. If no status is specified, all open tasks are retrieved, as status is set to `OPEN` by default. \n\n`Get all Tasks` supports pagination, however it is disabled by default. `PaginationDetails` specifies whether the pagination should be enabled or not. \n\n<!--\ntitle: \"Example: Gets all tasks for the client with id 16 - Fetches all open tasks\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16\n```\n<!--\ntitle: \"Example: Gets all completed tasks for the client with id 16\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16&status=COMPLETED\n```\n<!--\ntitle: \"Example: Gets all completed tasks for the client with id 16\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16&status=COMPLETED\n```\n<!--\ntitle: \"Example: Get the tasks paginated for the user with the username demo\"\nlineNumbers: true\n-->\n```\nGET  api/tasks?username=demo\n```",
+        "description": "Lets you retireve all tasks for the given ID. To retrieve all task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint to fetch the task value associated with the task. \n\nPass the clientId or groupId in the JSON body to specify the user.\n\nYou can also provide the additional parameters, FromDate and ToDate to find tasks between a specific time frame.\nUse \"Status\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. If no status is specified, all open tasks are retrieved, as status is set to `OPEN` by default. \n\n`Get all Tasks` supports pagination, however it is disabled by default. `PaginationDetails` specifies whether the pagination should be enabled or not. \n\n<!--\ntitle: \"Example: Gets all tasks for the client with id 16 - Fetches all open tasks\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16\n```\n<!--\ntitle: \"Example: Gets all completed tasks for the client with id 16\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16&status=COMPLETED\n```\n<!--\ntitle: \"Example: Gets all completed tasks for the client with id 16\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16&status=COMPLETED\n```\n<!--\ntitle: \"Example: Get the tasks paginated for the user with the username demo\"\nlineNumbers: true\n-->\n```\nGET  api/tasks?username=demo\n```",
         "operationId": "getAll",
         "consumes": [
           "application/json"
@@ -790,7 +790,7 @@
           "Tasks"
         ],
         "summary": "Create a Task",
-        "description": "Create a task with a title and description and assign it to a user, associate with an object, and give it a due date for completion. Prompts an action for an asignee to complete a task with due date. you can also update the task via `POST`, only by using JSON encoding. \n\n**Note 1**: The `Due Date` parameter is required. ",
+        "description": "Create a task with a title and description and assign it to a user, associate with an object, and give it a due date for completion. Prompts an action for an asignee to complete a task with due date. you can also update the task via `POST`, only by using JSON encoding. \n\n**Note 1**: The parameters `Title`, `Username` and `Due Date` are required. It is recommended to use meaningful text for title and description for better search results. \n\n<!--\ntitle: \"Example: GCreate a task to review a loan for client id 64 due on 2011-06-16\"\nlineNumbers: true\n-->\n```\nPOST /api/tasks/ \"title=Review Loan&duedate=2011-06-16&username=demo&clientid=64&description=Please check the automatically created loan application for this client.\"\n```",
         "operationId": "create",
         "consumes": [
           "application/json"
@@ -809,7 +809,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Task to be created",
+            "description": "```\n{\n  \"assignedUserKey\": \"string\",\n  \"description\": \"string\",\n  \"dueDate\": \"1987-04-26\",\n  \"id\": 0,\n  \"status\": \"OPEN\",\n  \"taskLinkKey\": \"string\",\n  \"taskLinkType\": \"CLIENT\",\n  \"title\": \"string\"\n}\n```",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Task"
