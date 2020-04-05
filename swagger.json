@@ -3,7 +3,7 @@
   "info": {
     "version": "v3",
     "title": "Tasks",
-    "description": "The Mambu Tasks API allows you to create tasks that you can assign to users or link it to a group of users to keep track of your daily management activities. A task can be an action performed by a user or a group such as following up on a repayment or other to-do items. You can assign tasks with a due date, add notes describing the task and mark closed when complete. This APIs let you perform create, retrieve, update and delete operation on the Tasks resource.\n\nThe Tasks API is organized around `REST`. Our API has predictable resource-oriented URLs, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. We have language bindings in cURL, HTTP, JavaScript, Node.js, Ruby, Python, Java, and Go! You can view the code samples and programming examples throughout this documentation. \n\n<!-- Mambu API standard HTTP verbs -->\n\n| Verb       |      Function    |   \n| ------------- | :-----------: | \n| `GET`     | To retrieve a resource or a collection of resources | \n| `POST`    | To create a resource  |  \n| `PUT`|   To replace an existing resource   | \n| `PATCH`|   To modify an existing resources  |   \n| `DELETE`|  To delete a resource  |  \n\nYou can use the Tasks API in test mode, which does not affect your live data or interact with your networks. The ID or encoded key you use to authenticate the request determines whether the request is live mode or test mode. \n\nThe Mambu API differs for every client as we can customize according to the client needs and functional areas. ",
+    "description": "The Mambu Tasks API allows you to create tasks that you can assign to users or link it to a group of users to keep track of your daily management activities. A task can be an action performed by a user or a group such as following up on a repayment or other to-do items. You can assign tasks with a due date, add notes describing the task and mark closed when complete. This APIs let you perform `create`, `retrieve`, `update` and `delete` operation on the Tasks resource.\n\nThe Tasks API is organized around `REST`. Our API has predictable resource-oriented URLs, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. We have language bindings in cURL, HTTP, JavaScript, Node.js, Ruby, Python, Java, and Go! You can view the code samples and programming examples throughout this documentation. \n\n<!-- Mambu API standard HTTP verbs -->\n\n| Verb       |      Function    |   \n| ------------- | :-----------: | \n| `GET`     | To retrieve a resource or a collection of resources | \n| `POST`    | To create a resource  |  \n| `PUT`|   To replace an existing resource   | \n| `PATCH`|   To modify an existing resource  |   \n| `DELETE`|  To delete a resource  |  \n\nYou can use the Tasks API in test mode, which does not affect your live data or interact with your networks. The ID or encoded key you use to authenticate the request determines whether the request is in live mode or in test mode. \n\nThe Mambu Tasks API differs for each client as it allows for customization according to the client's needs and functional areas. ",
     "contact": {
       "name": "Mambu",
       "url": "https://www.mambu.com/",
@@ -29,7 +29,7 @@
           "Tasks"
         ],
         "summary": "Get Task",
-        "description": "Lets you retireve a task that can be filtered by user key or client key. To retrieve a task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint e.g. https://localhost:8889/api/tasks/{taskId} to fetch the task value associated with the task. \n\nPass the `clientId` or `groupId` in the JSON body to specify the user.\nYou can also provide the additional parameter, `DueDate` to find tasks on specific date.\nUse \"StatusCode\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. Staus code is set to open by default. \n",
+        "description": "Lets you retireve a task that can be filtered by a user key or a client key. To retrieve a task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint e.g. https://localhost:8889/api/tasks/{taskId} to fetch the task value associated with the task. \n\nYou can pass the `clientId` or `groupId` in the JSON body to specify the user.\nYou can also provide the additional parameter, `DueDate` to find tasks on specific date.\nUse \"StatusCode\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. Staus code is set to open by default. \n",
         "operationId": "getById",
         "consumes": [
           "application/json"
@@ -75,8 +75,43 @@
             "schema": {
               "type": "object"
             },
-            "description": "```\nGET https://localhost:8889/api/tasks/{taskId} HTTP/1.1\nHost: localhost:8889\nAccept: application/vnd.mambu.v2+json\n```",
-            "x-examples": {}
+            "description": "",
+            "x-examples": {
+              "example-1": {}
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object"
+            },
+            "description": "",
+            "x-examples": {
+              "example-1": {}
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object"
+            },
+            "description": "",
+            "x-examples": {
+              "example-1": {}
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object"
+            },
+            "description": "",
+            "x-examples": {
+              "example-1": {}
+            }
           },
           {
             "in": "body",
@@ -190,7 +225,7 @@
           "Tasks"
         ],
         "summary": "Update a Task",
-        "description": "Lets you update a task. This can be used to update a task's configuration, or its completion state. You can update multiple attributes of the same task in the same request.\n\nSpecify the `TaskId` in the API URL.\n\n<!--\ntitle: \"POST /api/tasks/\"\nlineNumbers: true\n-->\n```\nPUT https://localhost:8889/api/tasks/{taskId} HTTP/1.1\nHost: localhost:8889\nContent-Type: application/json\nAccept: application/vnd.mambu.v2+json\n```\n",
+        "description": "Lets you update a task's configuration, or its completion state. You can update multiple attributes of the same task in the same request.\n\nSpecify the `TaskId` in the API URL.\n",
         "operationId": "update",
         "consumes": [
           "application/json"
@@ -354,7 +389,7 @@
           "Tasks"
         ],
         "summary": "Delete a Task",
-        "description": "Deletes specific task from the resource based on the Id or encoded Key. On successful deletion of task, returns response code `204`\n\n<!--\ntitle: \"Delete a task based on id\"\nlineNumbers: true\n-->\n```\nDELETE /api/tasks/2\n```\n<!--\ntitle: \"Delete a task based on encoded key\"\nlineNumbers: true\n-->\n```\nDELETE /api/tasks/8a33ae49441c4fe101441c71581203a6\n```\n<!--\ntitle: \"Success return code `204`\"\nlineNumbers: true\n-->\n```\n{\n    \"returnCode\":0,\n    \"returnStatus\":\"SUCCESS\"\n}\n```\n",
+        "description": "Deletes specific task from the resource based on the Id or encoded Key. On successful deletion of task, returns response code `204`\n",
         "operationId": "delete",
         "consumes": [
           "application/json"
@@ -377,7 +412,7 @@
               "type": "object",
               "properties": {}
             },
-            "description": "```\nDELETE https://localhost:8889/api/tasks/{taskId} HTTP/1.1\nHost: localhost:8889\nAccept: application/vnd.mambu.v2+json\n```"
+            "description": ""
           },
           {
             "type": "string",
@@ -390,12 +425,7 @@
         "responses": {
           "204": {
             "description": "Deletes Task. Returns response code `204`\n\n",
-            "examples": {
-              "example-1": {
-                "returnCode": 0,
-                "returnStatus": "SUCCESS"
-              }
-            }
+            "examples": {}
           },
           "400": {
             "description": "Bad request.",
@@ -433,7 +463,7 @@
           "Tasks"
         ],
         "summary": "Partially update an existing task",
-        "description": "Lets you update a task allowing you to makes changes to part of the task such as changing its properties. \n\nThe `body` parameter is an array allowing patch operations to be applied to a resource.\n\n<!--\ntitle: \"PATCH /api/tasks/\"\nlineNumbers: true\n-->\n```\nPATCH https://localhost:8889/api/tasks/{taskId} HTTP/1.1\nHost: localhost:8889\nContent-Type: application/json\nAccept: application/vnd.mambu.v2+json\n```",
+        "description": "Lets you update a part of the task such as changing its properties. \n\nThe `body` parameter is an array allowing `Patch Operations` to be applied to a resource.\n",
         "operationId": "patch",
         "consumes": [
           "application/json"
@@ -452,7 +482,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "[\n  {\n    \"from\": \"string\",\n    \"op\": \"ADD\",\n    \"path\": \"string\",\n    \"value\": {}\n  }\n]",
+            "description": "```\n[\n  {\n    \"from\": \"string\",\n    \"op\": \"ADD\",\n    \"path\": \"string\",\n    \"value\": {}\n  }\n]\n```",
             "required": true,
             "schema": {
               "type": "array",
@@ -547,7 +577,7 @@
           "Tasks"
         ],
         "summary": "Get all Tasks",
-        "description": "Lets you retireve tasks using various query parameters. To retrieve all task that is assigned to a user or a group, use HTTP GET method on the /tasks/{taskId} endpoint to fetch the task value associated with the task. \n\nPass the clientId or groupId in the JSON body to specify the user.\n\nUse \"Status\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. If no status is specified, all open tasks are retrieved, as status is set to `OPEN` by default. \n<!--\ntitle: \"Example: Gets all tasks for the client with id 16 - Fetches all open tasks\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16\n```\n<!--\ntitle: \"Example: Gets all completed tasks for the client with id 16\"\nlineNumbers: true\n-->\n```\nGET api/tasks?clientid=16&status=COMPLETED\n```\n`Get all Tasks` supports pagination, however it is disabled by default. `PaginationDetails` specifies whether the pagination should be enabled or not. \n<!--\ntitle: \"Example: Get the tasks paginated for the user with the username demo\"\nlineNumbers: true\n-->\n```\nGET  api/tasks?username=demo\n```\n",
+        "description": "Lets you retireve tasks using various query parameters. To retrieve all tasks that are assigned to a user or a group, use HTTP GET method on the `/tasks/{taskId}` endpoint to fetch the task value associated with the task. \n\nPass the `clientId` or `groupId` in the JSON body to specify the user.\n\nUse \"Status\" = `OPEN` to find open tasks, `OVERDUE` to find incomplete tasks and `COMPLETED` to find completed tasks. If no status is specified, all open tasks are retrieved as status is set to `OPEN` by default. \n",
         "operationId": "getAll",
         "consumes": [
           "application/json"
@@ -634,7 +664,20 @@
               "type": "object",
               "properties": {}
             },
-            "description": "```\nGET https://localhost:8889/api/tasks HTTP/1.1\nHost: localhost:8889\nAccept: application/vnd.mambu.v2+json\n```"
+            "description": "",
+            "x-examples": {}
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            },
+            "description": "",
+            "x-examples": {
+              "example-1": {}
+            }
           }
         ],
         "responses": {
@@ -712,7 +755,7 @@
           "Tasks"
         ],
         "summary": "Create a Task",
-        "description": "Create a task with a title and description and assign it to a user, associate with an object, and give it a due date for completion. Prompts an action for an asignee to complete a task with due date. The status is set as `OPEN` by default. you can also update the task via `POST`, only by using JSON encoding. \n\n\n**Note 1**: The parameters `Title`, `Username` and `DueDate` are required. It is recommended to use meaningful text for title and description for better search results. \n\n<!--\ntitle: \"POST /api/tasks/\"\nlineNumbers: true\n-->\n```\n{\n   \"task\":{\n      \"dueDate\":\"2014-02-11T15:36:34+0000\",\n      \"title\":\"Create a new client\",\n      \"description\":\"Create a new client named John Smith with home phone (44)333-8989 and address 123 Main Street\",\n      \"status\":\"OPEN\",\n      \"assignedUserKey\":\"8a33ae49441c4fe101441c5fe42f0005\"\n   }\n}\n```\n<!--\ntitle: \"Example: Create a task to review a loan for client id 64 due on 2011-06-16\"\nlineNumbers: true\n-->\n```\nPOST /api/tasks/ \"title=Review Loan&duedate=2011-06-16&username=demo&clientid=64&description=Please check the automatically created loan application for this client.\"\n```",
+        "description": "Lets you to create a task with a title and description and assign it to a user, associate with an object, and give it a due date for completion. This endpoint prompts an action for an assignee to complete a task with due date. you can also update the task via `POST`, only by using JSON encoding. The status is set as `OPEN` by default.\n\n\n**Note 1**: The parameters `Title`, `Username` and `DueDate` are required. It is recommended to use relevant and meaningful text for title and description for better search results. \n",
         "operationId": "create",
         "consumes": [
           "application/json"
@@ -736,7 +779,21 @@
             "schema": {
               "$ref": "#/definitions/Task"
             },
-            "x-examples": {}
+            "x-examples": {
+              "Code sample": {}
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "```\n{\n  \"assignedUserKey\": \"string\",\n  \"description\": \"string\",\n  \"dueDate\": \"1987-04-26\",\n  \"id\": 0,\n  \"status\": \"OPEN\",\n  \"taskLinkKey\": \"string\",\n  \"taskLinkType\": \"CLIENT\",\n  \"title\": \"string\"\n}\n```",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Task"
+            },
+            "x-examples": {
+              "example-1": {}
+            }
           },
           {
             "in": "formData",
@@ -797,7 +854,7 @@
               "$ref": "#/definitions/Task"
             },
             "examples": {
-              "example-1": {
+              "sample response": {
                 "lastModifiedDate": "2016-09-06T13:37:50+03:00",
                 "createdByUserKey": "string",
                 "dueDate": "1987-04-26",
@@ -841,7 +898,7 @@
     }
   },
   "securityDefinitions": {
-    "API Key - 1": {
+    "API Key": {
       "type": "basic"
     }
   },
@@ -2026,30 +2083,8 @@
           "properties": {}
         }
       },
-      "description": "A single change that needs to be made to a resource"
-    },
-    "PatchOperationsList": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/PatchOperation"
-      },
-      "x-examples": {
-        "example-1": {}
-      }
-    },
-    "ErrorResponse": {
-      "type": "object",
-      "x-examples": {
-        "example-1": {}
-      },
-      "properties": {
-        "errors": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/RestError"
-          }
-        }
-      }
+      "description": "A single change that needs to be made to a resource",
+      "x-examples": {}
     }
   },
   "produces": [
